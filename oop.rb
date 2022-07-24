@@ -10,6 +10,7 @@ class Unicorn
     @hooves = 4
     @horn = 1
   end
+
   def sparkle
     puts "*~* #{@name} *~*"
   end
@@ -31,12 +32,17 @@ class Vampire
     @name = name
     @thirsty = true
   end
+
   def drinks
     @thirsty = false
   end
 end
 vampire1 = Vampire.new("Dracula")
-p vampire1.drinks
+p vampire1.name
+p vampire1.pet
+p vampire1.thirsty
+vampire1.drinks
+p vampire1.thirsty
 # I'm getting nil
 
 #  Write a Dragon class
@@ -47,7 +53,7 @@ p vampire1.drinks
 #  it should have a eat method. If the dragon eats 4 times, it is no longer hungry
 
 class Dragon
-  attr_reader :name, :rider, :color
+  attr_reader :name, :rider, :color, :is_hungry
   def initialize(name, rider, color)
     @name = name
     @rider = rider
@@ -56,10 +62,10 @@ class Dragon
     @hunger = 0
     # def @hunger - if hunger == 4 is_hungry = false
   end
-  def eat
-    @hunger + 1
-    if hunger > 4
 
+  def eat
+    @hunger += 1
+    if @hunger >= 4
       @is_hungry = false
     end
   end
@@ -67,6 +73,12 @@ end
 # I tried to set up a feed counter but I'm not sure
 dragon1 = Dragon.new("Falnir", "Rilius Beetle", "Red")
 p dragon1
+p dragon1.is_hungry
+dragon1.eat
+dragon1.eat
+dragon1.eat
+dragon1.eat
+p dragon1.is_hungry
 
 #  Write a Hobbit class
 #  it should have a dynamic name attribute (string)
@@ -79,33 +91,72 @@ p dragon1
 
 class Hobbit
   attr_reader :name, :disposition, :age, :is_adult, :is_old, :has_ring
-  def initialize(name, disposition)
+  def initialize(name, disposition, age)
     @name = name
     @disposition = disposition
-    @age = 0
-  def has_ring
-    if name == "Frodo"
+    @age = age
+    @is_adult = false
+    @is_old = false
+    @has_ring = false
+  end
+
+  def celebrate_birthday
+    @age += 1
+    if @age >= 33 && @age < 101
+      @is_adult = true
+    elsif @age >= 101
+      @is_old = true
+      @is_adult = true
+    end
+    "I am now #{@age} years old!"
+  end
+
+  def ring
+    if @name == "Frodo" && @age >= 33 && @age <= 50
       @has_ring = true
+      "I wish it never came to me"
+    elsif @name == "Frodo" && @age > 50
+      "The ring has been destroyed"
+    elsif @name == "Sam" && @age >= 21 && @age <= 38
+      "Mr Frodo sure doesn't age huh since he got that nice ring from Mr Bilbo huh?"
+    elsif @name == "Sam" && @age > 38
+      "Mr Frodo destroyed the Ring"
+    elsif @name == "Merry" && @age >= 19 && @age <= 36
+      "Mr Frodo sure doesn't age huh since he got that nice ring from Mr Bilbo huh?"
+    elsif @name == "Merry" && @age > 36
+      "Mr Frodo destroyed the Ring"
+    elsif @name == "Pippin" && @age >= 11 && @age <= 28
+      "Mr Frodo sure doesn't age huh since he got that nice ring from Mr Bilbo huh?"
+    elsif @name == "Pippin" && @age > 28
+      "Mr Frodo destroyed the Ring"
+    elsif @name == "Bilbo" && @age >= 50 && @age <= 111
+      "Look at this nifty Ring I got from Gollum"
+    elsif @name == "Bilbo" && @age > 111 && @age <= 128
+      "I gave my Ring to my beloved nephew Frodo!"
+    elsif @name == "Bilbo" && @age > 128
+      "My beloved Nephew has lost my Ring, we now sail for Valinor with Gandalf and Elrond"
     else
       @has_ring = false
+      "No-one knows where the ring is"
     end
-  def is_adult
-    if age >= 33
-      @is_adult = true
-    else
-      @is_adult = false
-    end
-  def is_old
-    if age >= 101
-      @is_old = true
-    else
-      @is_false = false
-    end
-  def age
-    @age + 1
   end
+
 end
 
-hobbit1 = Hobbit.new("Frodo", "Laidback")
-p hobbit1
+hobbit1 = Hobbit.new("Pippin", "Clumsy", 16)
+p hobbit1.celebrate_birthday
+p hobbit1.ring
+p hobbit1.celebrate_birthday
+p hobbit1.ring
+hobbit2 = Hobbit.new("Bilbo", "Nostalgic", 127)
+p hobbit2.celebrate_birthday
+p hobbit2.ring
+p hobbit2.celebrate_birthday
+p hobbit2.ring
+hobbit3 = Hobbit.new("Frodo", "Kind", 31)
+p hobbit3.celebrate_birthday
+p hobbit3.ring
+p hobbit3.celebrate_birthday
+p hobbit3.ring
+
 # I keep getting a message about unexpected end of input and I don't know why
